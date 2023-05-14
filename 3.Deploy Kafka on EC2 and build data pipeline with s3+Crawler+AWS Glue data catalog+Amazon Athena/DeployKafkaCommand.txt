@@ -1,0 +1,33 @@
+0. Login EC2 Instance
+ssh -i "kafka-datapipeline.pem" ec2-user@ec2-50-17-153-149.compute-1.amazonaws.com
+
+1. Install kafka
+wget https://downloads.apache.org/kafka/3.3.1/kafka_2.12-3.3.1.tgz
+tar -xvf kafka_2.12-3.3.1.tgz
+
+2. Install JDK
+java -version
+yum search jdk
+sudo yum install java-1.8.0-openjdk
+java -version
+
+3. Start zookeeper
+cd kafka_2.12-3.3.1
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+4. Start kafka
+export KAFKA_HEAP_OPTS="-Xmx256M -Xms128M"
+cd kafka_2.12-3.3.1
+bin/kafka-server-start.sh config/server.properties
+
+5. Create Topic Producer Consumer
+
+bin/kafka-topics.sh --create --topic demo_testing2 --bootstrap-server 50.17.153.149:9092 --replication-factor 1 --partitions 1
+
+bin/kafka-console-producer.sh --topic demo_testing2 --bootstrap-server 50.17.153.149:9092
+
+bin/kafka-console-consumer.sh --topic demo_testing2 --bootstrap-server 50.17.153.149:9092
+
+6.Create Crawler on amazonaws
+
+7.Create DataCatalog on AWS
